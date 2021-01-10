@@ -8,9 +8,6 @@
        (into {} (map (fn [[_ k v]]
                        [(keyword k) v])))))
 
-(defn ->lines [rdr]
-  (map parse-line (string/split (slurp rdr) #"\n\n+")))
-
 (defn valid? [passport]
   (every? passport [:byr :iyr :eyr :hgt :hcl :ecl :pid]))
 
@@ -65,7 +62,7 @@
   (count (filter pred passports)))
 
 (comment
-  (let [input (->lines (in/load-input 4))]
+  (let [input (in/group-parser (in/load-input 4) parse-line)]
     ;; part 1
     (solve valid? input)
 
