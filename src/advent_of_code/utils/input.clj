@@ -11,5 +11,10 @@
 (defn group-parser [rdr f]
   (sequence (map f) (string/split (slurp rdr) #"\n\n+")))
 
+(defn grid-parser [rdr f]
+  (transduce (map (partial transduce (map f) conj))
+             conj
+             (line-seq rdr)))
+
 (defn parse-long [x]
   (Long/parseLong x))
