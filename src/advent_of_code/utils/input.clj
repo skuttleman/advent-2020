@@ -15,7 +15,7 @@
   (split-parser rdr "\n\n+" f))
 
 (defn grid-parser [rdr f]
-  (transduce (map (partial transduce (map (comp f string/trim)) conj))
+  (transduce (map (partial transduce (map f) conj))
              conj
              (line-seq rdr)))
 
