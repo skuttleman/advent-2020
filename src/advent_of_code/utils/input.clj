@@ -6,13 +6,16 @@
   (io/reader (io/resource (str "day-" day ".txt"))))
 
 (defn line-parser [rdr f]
-  (sequence (map f) (line-seq rdr)))
+  (sequence (map (comp f string/trim)) (line-seq rdr)))
+
+(defn split-parser [rdr re f]
+  (sequence (map (comp f string/trim)) (string/split (slurp rdr) re)))
 
 (defn group-parser [rdr f]
-  (sequence (map f) (string/split (slurp rdr) #"\n\n+")))
+  (split-parser rdr "\n\n+" f))
 
 (defn grid-parser [rdr f]
-  (transduce (map (partial transduce (map f) conj))
+  (transduce (map (partial transduce (map (comp f string/trim)) conj))
              conj
              (line-seq rdr)))
 
