@@ -16,5 +16,8 @@
              conj
              (line-seq rdr)))
 
-(defn parse-long [x]
-  (Long/parseLong x))
+(defn parse-long
+  ([x]
+   (Long/parseLong (str x)))
+  ([x radix]
+   (Long/parseLong x radix)))
