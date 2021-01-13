@@ -12,7 +12,7 @@
   (sequence (map (comp f string/trim)) (string/split (slurp rdr) re)))
 
 (defn group-parser [rdr f]
-  (split-parser rdr "\n\n+" f))
+  (split-parser rdr #"\n\n+" f))
 
 (defn grid-parser [rdr f]
   (transduce (map (partial transduce (map f) conj))
